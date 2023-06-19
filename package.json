@@ -1,0 +1,36 @@
+{
+  "name": "chaise-query",
+  "version": "0.0.1",
+  "description": "Rest client library with state management",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "scripts": {
+    "test": "echo implement tests",
+    "build": "tsc",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
+    "lint": "eslint ./src",
+    "prepare" : "npm run build",
+    "prepublishOnly" : "npm test && npm run lint",
+    "preversion" : "npm run lint",
+    "version" : "npm run format && git add -A src",
+    "postversion" : "git push && git push --tags"
+  },
+  "files": ["lib/**/*"],
+  "keywords": ["Rest Client", "State manager"],
+  "author": "Sergei Gribovskii",
+  "license": "ISC",
+  "dependencies": {
+    "zen-observable-ts": "^1.1.0"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/uuid": "^9.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.11",
+    "@typescript-eslint/parser": "^5.59.11",
+    "eslint": "^8.43.0",
+    "typescript": "^5.1.3"
+  }
+}
