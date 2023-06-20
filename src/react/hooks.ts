@@ -35,12 +35,12 @@ export function useQuery<TData, TArgs extends ObjectDataType<any>>(document: Que
   }, [options]);
 
   const observableQueryRef = useRef<ObservableQuery<TData, TArgs> | null>(null);
-  
+
   useEffect(() => {
-    observableQueryRef.current = client.getObservableQuery(document, opts);    
+    observableQueryRef.current = client.getObservableQuery(document, opts);
     const observer = observableQueryRef.current.subscribe({ next: setState });
     observableQueryRef.current.fetch();
-    
+
     return () => {
       observer.unsubscribe();
     };

@@ -29,7 +29,7 @@ export class ObservableQuery<TData, TArgs extends ObjectDataType<any>> extends O
   constructor(id: string, queryDocument: QueryDocument<TData, TArgs>, options: QueryOptions<TArgs>, queryManager: QueryManager) {
     super((observer) => {
       this.observer = observer;
-      
+
       return () => {
         observer.complete();
         queryManager.stopWatchQuery(this);

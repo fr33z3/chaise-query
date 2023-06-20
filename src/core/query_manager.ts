@@ -29,9 +29,9 @@ export class QueryManager {
     return observableQuery;
   }
 
-  async fetchQuery<TData, TArgs extends ObjectDataType<any>>(observableQuery: ObservableQuery<TData, TArgs>, options: QueryOptions<TArgs>) {  
+  async fetchQuery<TData, TArgs extends ObjectDataType<any>>(observableQuery: ObservableQuery<TData, TArgs>, options: QueryOptions<TArgs>) {
     const { args, cachePolicy } = options;
-  
+
     if (['cache-first', 'cache-and-network', 'cache-only'].includes(cachePolicy)) {
       const cacheData = this.cache.readQuery(observableQuery.document, args);
       if (cacheData) {
@@ -41,15 +41,15 @@ export class QueryManager {
     }
     if (cachePolicy === 'cache-only') return;
 
-    const { document, error, data } = await this.executeLinks(observableQuery.document, args);    
-    
+    const { document, error, data } = await this.executeLinks(observableQuery.document, args);
+
     if (error) {
       observableQuery.writeError(error);
     }
 
     if (data && cachePolicy !== 'no-cache') {
       this.cache.writeQuery(document, args, data);
-      
+
       this.observableQueries.forEach((activeQuery) => {
         const cacheData = this.cache.readQuery(activeQuery.document, observableQuery.options.args);
         if (cacheData) activeQuery.writeData(cacheData);
@@ -74,7 +74,7 @@ export class QueryManager {
       const ctx = await prevCtx;
       return link.execute(ctx);
     }, Promise.resolve(initialCtx));
-    
+
     return context;
   }
 

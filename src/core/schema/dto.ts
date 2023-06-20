@@ -14,7 +14,7 @@ export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<
     this.name = name;
     this.keys = options.keys ?? ['id'];
   }
-  
+
   parse(data: any, onParse?: OnParseFn): { [K in keyof S]: InferType<S[K]> } & { __typeName: N } {
     if (onParse) {
       return onParse(this, data);
@@ -34,7 +34,7 @@ export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<
     return {
       __typeName: this.name,
       ...parsedData
-    };    
+    };
   }
 
   getIdentifier(data: S) {

@@ -106,7 +106,7 @@ export class MutationDocument<TData, Input extends ObjectDataType<any>> {
     // TODO: serialize args
 
     if (this.body) return this.body(args);
-    
+
     return args;
   }
 }

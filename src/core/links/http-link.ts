@@ -24,7 +24,7 @@ export class HTTPLink implements ChaiseLink {
     const ctx = this.applyHeaders(context);
     const { document, headers, args } = ctx;
     const url = this.buildRequestUrl(document, args);
-    
+
     const body = document instanceof QueryDocument ? undefined : JSON.stringify(document.getBody(args));
 
     const response = await fetch(url, {
@@ -43,7 +43,7 @@ export class HTTPLink implements ChaiseLink {
       return {
         ...ctx,
         data: jsonData,
-      };        
+      };
     } else {
       return {
         ...ctx,

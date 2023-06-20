@@ -9,7 +9,7 @@ export class ChaiseCache {
 
   writeQuery(document: QueryDocument<any, any>, args: any, data: any) {
     const key = this.getQueryKey(document, args);
-    
+
     const normalizedQueryData = this.normalizeData(document.schema, data);
     this.queries.set(key, normalizedQueryData);
   }
@@ -48,7 +48,7 @@ export class ChaiseCache {
 
   getDTORef(name: string, dtoId: string) {
     return `${name}(${dtoId})`;
-  }  
+  }
 
   getQueryKey(document: QueryDocument<any, any>, args: Record<string, any> = {}) {
     return `${document.name}:${document.getKeyArgs(args)}`;
@@ -82,7 +82,7 @@ export class ChaiseCache {
         };
       } else {
         return objData;
-      }      
+      }
     });
   }
 }

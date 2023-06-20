@@ -30,7 +30,7 @@ export type QueryOptions<TArgs extends ObjectDataType<any>> = {
 export class ChaiseClient {
   private queryManager: QueryManager;
   private links: ChaiseLink[];
-  readonly cache: ChaiseCache;  
+  readonly cache: ChaiseCache;
 
   constructor(options: ChaiseClientOptions) {
     const cache = options.cache ?? new ChaiseCache();
@@ -70,7 +70,7 @@ export class ChaiseClient {
       const ctx = await prevCtx;
       return link.execute(ctx);
     }, Promise.resolve(initialCtx));
-    
+
     return context;
   }
 }
