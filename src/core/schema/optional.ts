@@ -1,9 +1,7 @@
-import { DataType, InferType } from './base';
+import { DataType, InferType } from './data_type';
 
-export class Optional<S extends DataType<any>> extends DataType<S | undefined> {
-  constructor(private dataType: S) {
-    super();
-  }
+export class Optional<S extends DataType<any>> implements DataType<S | undefined> {
+  constructor(private dataType: S) {}
 
   parse(data: any): InferType<S> | undefined {
     if (data === undefined) {

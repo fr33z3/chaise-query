@@ -3,7 +3,7 @@ import { ClientContext } from './ClientProvider';
 import { MutationDocument, QueryDocument } from '../core/document';
 import { ObservableQuery, ObservableState, QueryOptions } from '../core/observable_query';
 import { ObjectDataType } from '../core/schema/object';
-import { InferType } from '../core/schema/base';
+import { InferType } from '../core/schema/data_type';
 import { MutationOptions, MutationResponse } from '../core/client';
 import { ChaiseCache } from '../core/cache';
 

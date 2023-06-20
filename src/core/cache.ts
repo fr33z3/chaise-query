@@ -4,8 +4,8 @@ import { ArrayDataType } from "./schema/array";
 import { DTO } from "./schema/dto";
 
 export class ChaiseCache {
-  queries: Map<string, any> = new Map();
-  dtos: Map<string, any> = new Map();
+  readonly queries: Map<string, any> = new Map();
+  readonly dtos: Map<string, any> = new Map();
 
   writeQuery(document: QueryDocument<any, any>, args: any, data: any) {
     const key = this.getQueryKey(document, args);

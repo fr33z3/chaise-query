@@ -1,21 +1,19 @@
-import { ObjectDataType, ObjectData } from "./object";
-import { InferType, OnParseFn } from './base';
+import { OnParseFn } from './data_type';
+import { ObjectDataType, ObjectData, ObjectTypeInfer } from "./object";
 
 export type DTOPOptions = {
   keys?: string[]
 }
 
 export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<S> {
-  readonly name: N;
   private keys: string[];
 
-  constructor(name: N, scalars: S, options: DTOPOptions) {
-    super(scalars);
-    this.name = name;
+  constructor(readonly name: N, attibutes: S, options: DTOPOptions) {
+    super(attibutes);
     this.keys = options.keys ?? ['id'];
   }
 
-  parse(data: any, onParse?: OnParseFn): { [K in keyof S]: InferType<S[K]> } & { __typeName: N } {
+  parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> & { __typeName: N } {
     if (onParse) {
       return onParse(this, data);
     }
@@ -28,7 +26,7 @@ export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<
     };
   }
 
-  parseNext(data: any, onParse: OnParseFn): { [K in keyof S]: InferType<S[K]> } & { __typeName: N } {
+  parseNext(data: any, onParse: OnParseFn): ObjectTypeInfer<S> & { __typeName: N } {
     const parsedData = super.parse(data, onParse);
 
     return {

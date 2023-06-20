@@ -1,6 +1,6 @@
-import { DataType } from "./base";
+import { BaseDataType } from "./base";
 
-export class NumberDataType extends DataType<number> {
+export class NumberDataType extends BaseDataType<number> {
   parse(data: any): number {
     return Number(data);
   }

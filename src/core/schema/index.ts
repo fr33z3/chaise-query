@@ -1,4 +1,4 @@
-import { InferType, DataType } from './base';
+import { InferType, DataType } from './data_type';
 import { StringDataType } from './string';
 import { NumberDataType } from './number';
 import { ObjectDataType } from './object';

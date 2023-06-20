@@ -1,7 +1,7 @@
 import { ChaiseCache } from './cache';
 import { InferSchema, Schema } from './schema';
 import { ObjectDataType } from './schema/object';
-import { InferType } from './schema/base';
+import { InferType } from './schema/data_type';
 
 type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
 type Path<Input extends ObjectDataType<any>> = string | ((args: InferSchema<Input>) => string)

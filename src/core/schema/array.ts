@@ -1,6 +1,7 @@
-import { DataType, InferType, OnParseFn } from './base';
+import { DataType, InferType, OnParseFn } from './data_type';
+import { BaseDataType } from './base';
 
-export class ArrayDataType<S extends DataType<any>> extends DataType<InferType<S>[]> {
+export class ArrayDataType<S extends DataType<any>> extends BaseDataType<InferType<S>[]> {
   constructor(readonly itemDataType: S) {
     super();
   }

@@ -5,7 +5,7 @@ import { ObjectDataType } from "./schema/object";
 import { ChaiseLink } from "./links/base";
 import { getInitialRequestContext } from "./links/request-context";
 import { ChaiseCache } from "./cache";
-import { InferType } from "./schema/base";
+import { InferType } from "./schema/data_type";
 
 export type QueryManagerOptions = {
   links: ChaiseLink[]
