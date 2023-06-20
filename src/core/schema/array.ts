@@ -1,10 +1,8 @@
-import { DataType, InferType, OnParseFn } from './base'
+import { DataType, InferType, OnParseFn } from './base';
 
-export class ArrayDataType<S extends DataType<any>> implements DataType<InferType<S>[]> {
-  readonly itemDataType: S;
-
-  constructor(dataType: S) {
-    this.itemDataType = dataType;
+export class ArrayDataType<S extends DataType<any>> extends DataType<InferType<S>[]> {
+  constructor(readonly itemDataType: S) {
+    super();
   }
 
   parse(data: any, onParse?: OnParseFn): InferType<S>[] {
@@ -13,7 +11,7 @@ export class ArrayDataType<S extends DataType<any>> implements DataType<InferTyp
     }
 
     const parsedArray = data.map(item => this.itemDataType.parse(item, onParse));
-    if (onParse) return onParse(this, parsedArray)
+    if (onParse) return onParse(this, parsedArray);
 
     return parsedArray;
   }

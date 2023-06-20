@@ -1,7 +1,7 @@
-import { FC, ReactNode, createContext } from 'react'
-import { ChaiseClient } from '../core/client'
+import { FC, ReactNode, createContext } from 'react';
+import { ChaiseClient } from '../core/client';
 
-export const ClientContext = createContext<ChaiseClient | null>(null)
+export const ClientContext = createContext<ChaiseClient | null>(null);
 
 interface ChaiseProviderProps {
   client: ChaiseClient
@@ -13,5 +13,5 @@ export const ChaiseProvider: FC<ChaiseProviderProps> = ({ client, children }) =>
     <ClientContext.Provider value={client}>
       {children}
     </ClientContext.Provider>
-  )
-}
+  );
+};

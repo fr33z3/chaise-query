@@ -2,11 +2,10 @@ import { DataType, InferType, OnParseFn } from "./base";
 
 export type ObjectData = Record<string, DataType<any>>
 
-export class ObjectDataType<S extends ObjectData> implements DataType<{ [K in keyof S]: InferType<S[K]> }> {
-  readonly attributes: S
-
-  constructor(attributes: S) {
-    this.attributes = attributes
+export class ObjectDataType<S extends ObjectData> extends DataType<{ [K in keyof S]: InferType<S[K]> }> {
+  constructor(readonly attributes: S) {
+    super();
+    this.attributes = attributes;
   }
 
   parse(data: any, onParse?: OnParseFn): { [K in keyof S]: InferType<S[K]> } {

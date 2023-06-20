@@ -1,7 +1,7 @@
 import { DataType } from "./base";
 
-export class StringDataType implements DataType<string> {
-  parse(data: any) {
-    return String(data)
+export class StringDataType extends DataType<string> {
+  parse(data: any): string {
+    return String(data);
   }
 }

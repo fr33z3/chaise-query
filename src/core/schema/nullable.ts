@@ -1,7 +1,9 @@
 import { DataType, InferType } from "./base";
 
-export class Nullable<S extends DataType<any>> implements DataType<S | null> {
-  constructor(private dataType: S) {}
+export class Nullable<S extends DataType<any>> extends DataType<S | null> {
+  constructor(private dataType: S) {
+    super();
+  }
 
   parse(data: any): InferType<S> | null {
     if (data === null || data === undefined) {

@@ -3,6 +3,7 @@
   "parser": "@typescript-eslint/parser",
   "plugins": ["@typescript-eslint"],
   "rules": {
+    "semi": "error",
     "@typescript-eslint/no-explicit-any": "off",
     "no-prototype-builtins": "off",
     "object-curly-spacing": ["error", "always"]

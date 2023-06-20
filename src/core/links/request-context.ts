@@ -1,6 +1,6 @@
-import { AnyDocument } from "../document"
-import { ObjectDataType } from "../schema/object"
-import { InferType } from "../schema/base"
+import { AnyDocument } from "../document";
+import { ObjectDataType } from "../schema/object";
+import { InferType } from "../schema/base";
 
 export type RequestContext<TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>> = {
   document: TDocument,
@@ -19,5 +19,5 @@ export function getInitialRequestContext<TData, TArgs extends ObjectDataType<any
     context: document.context,
     data: null,
     error: null,
-  }
+  };
 }
