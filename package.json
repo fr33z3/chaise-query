@@ -5,21 +5,27 @@
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "test": "echo implement tests",
+    "test": "jest",
     "build": "tsc",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.js\"",
     "lint": "eslint ./src",
-    "prepare" : "npm run build",
-    "prepublishOnly" : "npm test && npm run lint",
-    "preversion" : "npm run lint",
-    "version" : "npm run format && git add -A src",
-    "postversion" : "git push && git push --tags"
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "preversion": "npm run lint",
+    "version": "npm run format && git add -A src",
+    "postversion": "git push && git push --tags"
   },
-  "files": ["lib/**/*"],
-  "keywords": ["Rest Client", "State manager"],
+  "files": [
+    "lib/**/*"
+  ],
+  "keywords": [
+    "Rest Client",
+    "State manager"
+  ],
   "author": "Sergei Gribovskii",
   "license": "ISC",
   "dependencies": {
+    "jest": "^29.5.0",
     "zen-observable-ts": "^1.1.0"
   },
   "peerDependencies": {
@@ -27,6 +33,9 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.5",
+    "@babel/preset-typescript": "^7.22.5",
+    "@types/jest": "^29.5.2",
     "@types/uuid": "^9.0.1",
     "@typescript-eslint/eslint-plugin": "^5.59.11",
     "@typescript-eslint/parser": "^5.59.11",

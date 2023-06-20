@@ -51,7 +51,7 @@ export class ChaiseCache {
   }
 
   getQueryKey(document: QueryDocument<any, any>, args: Record<string, any> = {}) {
-    return `${document.name}:${document.getKeyArgs(args)}`;
+    return `${document.name}(${document.getKeyArgs(args)})`;
   }
 
   private denormalizeData(schema: Schema<any>, data: any) {
