@@ -13,26 +13,16 @@ export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<
     this.keys = options.keys ?? ['id'];
   }
 
-  parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> & { __typeName: N } {
+  parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> {
     if (onParse) {
       return onParse(this, data);
     }
 
-    const parsedData = super.parse(data, onParse);
-
-    return {
-      __typeName: this.name,
-      ...parsedData
-    };
+    return super.parse(data, onParse);
   }
 
-  parseNext(data: any, onParse: OnParseFn): ObjectTypeInfer<S> & { __typeName: N } {
-    const parsedData = super.parse(data, onParse);
-
-    return {
-      __typeName: this.name,
-      ...parsedData
-    };
+  parseNext(data: any, onParse: OnParseFn): ObjectTypeInfer<S> {
+    return super.parse(data, onParse);
   }
 
   getIdentifier(data: S) {
