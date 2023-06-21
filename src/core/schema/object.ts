@@ -1,6 +1,7 @@
 import { OnParseFn, DataType, InferType } from './data_type';
 import { BaseDataType } from "./base";
 import { Optional } from "./optional";
+import { ChaiseSchemaError } from '../errors/schema_error';
 
 export type ObjectData = Record<string, DataType<any>>
 
@@ -16,16 +17,16 @@ export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTyp
 
   parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> {
     if (data === null) {
-      throw new TypeError('expected object but received null');
+      throw new ChaiseSchemaError('object', 'null');
     }
     if (data === undefined) {
-      throw new TypeError('expected object but received undefined');
+      throw new ChaiseSchemaError('object', 'undefined');
     }
     if (Array.isArray(data)) {
-      throw new TypeError(`expected object but received array`);
+      throw new ChaiseSchemaError('object', 'array');
     }
     if (typeof data !== 'object') {
-      throw new TypeError(`expected object but received ${typeof data}`);
+      throw new ChaiseSchemaError('object', typeof data);
     }
 
     const result: ObjectTypeInfer<S> = {} as ObjectTypeInfer<S>;

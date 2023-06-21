@@ -1,21 +1,22 @@
+import { ChaiseSchemaError } from "../errors/schema_error";
 import { BaseDataType } from "./base";
 
 export class StringDataType extends BaseDataType<string> {
   parse(data: any): string {
     if (data === null) {
-      throw new TypeError('expected string but received null');
+      throw new ChaiseSchemaError('string', 'null');
     }
     if (data === undefined) {
-      throw new TypeError('expected string but received undefined');
+      throw new ChaiseSchemaError('string', 'undefined');
     }
     if (typeof data === 'boolean') {
-      throw new TypeError('expected string but received boolean');
+      throw new ChaiseSchemaError('string', 'boolean');
     }
     if (Array.isArray(data)) {
-      throw new TypeError(`expected string but received array`);
+      throw new ChaiseSchemaError('string', 'array');
     }
     if (typeof data === 'object') {
-      throw new TypeError(`expected string but received object`);
+      throw new ChaiseSchemaError('string', 'object');
     }
 
     return String(data);

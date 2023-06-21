@@ -1,5 +1,6 @@
 import { DataType } from '../data_type';
 import { ArrayDataType } from '../array';
+import { ChaiseSchemaError } from '../../errors/schema_error';
 
 describe('ArrayDataType', () => {
   const mockedType: DataType<any> = {
@@ -35,36 +36,36 @@ describe('ArrayDataType', () => {
   });
 
   it('does not parse number', () => {
-    expect(() => dataType.parse(0)).toThrow(TypeError);
-    expect(() => dataType.parse(100)).toThrow(TypeError);
+    expect(() => dataType.parse(0)).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse(100)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(100)).toThrow('expected array but received number');
   });
 
   it('does not parse string', () => {
-    expect(() => dataType.parse('')).toThrow(TypeError);
-    expect(() => dataType.parse('test')).toThrow(TypeError);
+    expect(() => dataType.parse('')).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse('test')).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse('test')).toThrow('expected array but received string');
   });
 
   it('does not parse boolean', () => {
-    expect(() => dataType.parse(false)).toThrow(TypeError);
-    expect(() => dataType.parse(true)).toThrow(TypeError);
+    expect(() => dataType.parse(false)).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse(true)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(true)).toThrow('expected array but received boolean');
   });
 
   it('does not parse object', () => {
-    expect(() => dataType.parse({})).toThrow(TypeError);
-    expect(() => dataType.parse({ a: 1 })).toThrow(TypeError);
+    expect(() => dataType.parse({})).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse({ a: 1 })).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse({ a: 1 })).toThrow('expected array but received object');
   });
 
   it('does not parse null', () => {
-    expect(() => dataType.parse(null)).toThrow(TypeError);
+    expect(() => dataType.parse(null)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(null)).toThrow('expected array but received null');
   });
 
   it('does not parse undefined', () => {
-    expect(() => dataType.parse(undefined)).toThrow(TypeError);
+    expect(() => dataType.parse(undefined)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(undefined)).toThrow('expected array but received undefined');
   });
 });

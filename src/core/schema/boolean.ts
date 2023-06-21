@@ -1,21 +1,22 @@
+import { ChaiseSchemaError } from "../errors/schema_error";
 import { BaseDataType } from "./base";
 
 export class BooleanDataType extends BaseDataType<boolean> {
   parse(data: any): boolean {
     if (data === null) {
-      throw new TypeError('expected boolean but received null');
+      throw new ChaiseSchemaError('boolean', 'null');
     }
 
     if (data === undefined) {
-      throw new TypeError('expected boolean but received undefined');
+      throw new ChaiseSchemaError('boolean', 'undefined');
     }
 
     if (Array.isArray(data)) {
-      throw new TypeError(`expected boolean but received array`);
+      throw new ChaiseSchemaError('boolean', 'array');
     }
 
     if (typeof data !== 'boolean') {
-      throw new TypeError(`expected boolean but received ${typeof data}`);
+      throw new ChaiseSchemaError('boolean', typeof data);
     }
 
     return Boolean(data);

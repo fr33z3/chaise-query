@@ -1,3 +1,4 @@
+import { ChaiseSchemaError } from '../../errors/schema_error';
 import { NumberDataType } from '../number';
 
 describe('NumberDataType', () => {
@@ -14,8 +15,8 @@ describe('NumberDataType', () => {
   });
 
   it('does not parse non number string', () => {
-    expect(() => dataType.parse('')).toThrow(TypeError);
-    expect(() => dataType.parse('test')).toThrow(TypeError);
+    expect(() => dataType.parse('')).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse('test')).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse('test')).toThrow('expected number but received string');
   });
 
@@ -25,20 +26,20 @@ describe('NumberDataType', () => {
   });
 
   it('does not parse array and object', () => {
-    expect(() => dataType.parse([])).toThrow(TypeError);
-    expect(() => dataType.parse([1, 2])).toThrow(TypeError);
+    expect(() => dataType.parse([])).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse([1, 2])).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse([1, 2])).toThrow('expected number but received array');
 
-    expect(() => dataType.parse({})).toThrow(TypeError);
-    expect(() => dataType.parse({ a: 1 })).toThrow(TypeError);
+    expect(() => dataType.parse({})).toThrow(ChaiseSchemaError);
+    expect(() => dataType.parse({ a: 1 })).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse({ a: 1 })).toThrow('expected number but received object');
   });
 
   it('does not parse null and undefined', () => {
-    expect(() => dataType.parse(null)).toThrow(TypeError);
+    expect(() => dataType.parse(null)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(null)).toThrow('expected number but received null');
 
-    expect(() => dataType.parse(undefined)).toThrow(TypeError);
+    expect(() => dataType.parse(undefined)).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse(undefined)).toThrow('expected number but received undefined');
   });
 });
