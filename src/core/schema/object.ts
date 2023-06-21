@@ -33,7 +33,14 @@ export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTyp
 
     for (const key in this.attributes) {
       const k = key as unknown as keyof ObjectTypeInfer<S>;
-      result[k] = this.attributes[key].parse(data[key], onParse);
+      try {
+        result[k] = this.attributes[key].parse(data[key], onParse);
+      } catch (err) {
+        if (err instanceof ChaiseSchemaError) {
+          err.addParent(key);
+        }
+        throw err;
+      }
     }
 
     return result;
