@@ -10,6 +10,7 @@ export class DTO<N extends string, S extends ObjectData> extends ObjectDataType<
 
   constructor(readonly name: N, attibutes: S, options: DTOPOptions) {
     super(attibutes);
+    this._typeName = `dto(${name})`;
     this.keys = options.keys ?? ['id'];
   }
 

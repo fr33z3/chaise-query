@@ -10,6 +10,8 @@ type MandatoryKeys<S> = Exclude<keyof S, OptionalKeys<S>>
 export type ObjectTypeInfer<S> = { [K in MandatoryKeys<S>]: InferType<S[K]> } & { [K in OptionalKeys<S>]?: InferType<S[K]> }
 
 export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTypeInfer<S>> {
+  protected _typeName = 'object';
+
   constructor(readonly attributes: S) {
     super();
     this.attributes = attributes;
@@ -17,16 +19,16 @@ export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTyp
 
   parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> {
     if (data === null) {
-      throw new ChaiseSchemaError('object', 'null');
+      throw new ChaiseSchemaError(this._typeName, 'null');
     }
     if (data === undefined) {
-      throw new ChaiseSchemaError('object', 'undefined');
+      throw new ChaiseSchemaError(this._typeName, 'undefined');
     }
     if (Array.isArray(data)) {
-      throw new ChaiseSchemaError('object', 'array');
+      throw new ChaiseSchemaError(this._typeName, 'array');
     }
     if (typeof data !== 'object') {
-      throw new ChaiseSchemaError('object', typeof data);
+      throw new ChaiseSchemaError(this._typeName, typeof data);
     }
 
     const result: ObjectTypeInfer<S> = {} as ObjectTypeInfer<S>;
