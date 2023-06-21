@@ -38,7 +38,7 @@ describe('Optional', () => {
     };
     const nullableDataType = new Optional(mockedType);
 
-    it('calls wrapped dataType parse method if data is not undefined', () => {
+    it('throws ChaiseSchemaError with extended source type', () => {
       expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
       expect(() => nullableDataType.parse(0)).toThrow("expected any or undefined but received test");
     });
@@ -52,7 +52,7 @@ describe('Optional', () => {
     };
     const nullableDataType = new Optional(mockedType);
 
-    it('calls wrapped dataType parse method if data is not undefined', () => {
+    it('throws original error', () => {
       expect(() => nullableDataType.parse(0)).toThrow(Error);
       expect(() => nullableDataType.parse(0)).toThrow('test error');
     });

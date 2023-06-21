@@ -3,24 +3,26 @@ import { DataType } from '../data_type';
 import { Nullable } from '../nullable';
 
 describe('Nullable', () => {
-  const mockedType: DataType<any> = {
-    parse: jest.fn(),
-  };
-  const nullableDataType = new Nullable(mockedType);
+  describe('for data type', () => {
+    const mockedType: DataType<any> = {
+      parse: jest.fn(),
+    };
+    const nullableDataType = new Nullable(mockedType);
 
-  it('returns null when data is null or undefined', () => {
-    expect(nullableDataType.parse(null)).toBeNull();
-    expect(nullableDataType.parse(undefined)).toBeNull();
-  });
+    it('returns null when data is null or undefined', () => {
+      expect(nullableDataType.parse(null)).toBeNull();
+      expect(nullableDataType.parse(undefined)).toBeNull();
+    });
 
-  it('calls wrapped dataType parse method if data is not null', () => {
-    nullableDataType.parse(0);
-    expect(mockedType.parse).toBeCalledWith(0);
-  });
+    it('calls wrapped dataType parse method if data is not null', () => {
+      nullableDataType.parse(0);
+      expect(mockedType.parse).toBeCalledWith(0);
+    });
 
-  it('calls wrapped dataType parse method if data is not null', () => {
-    nullableDataType.parse('');
-    expect(mockedType.parse).toBeCalledWith('');
+    it('calls wrapped dataType parse method if data is not null', () => {
+      nullableDataType.parse('');
+      expect(mockedType.parse).toBeCalledWith('');
+    });
   });
 
   describe('for data type which throws ChaiseSchemaError', () => {
@@ -31,7 +33,7 @@ describe('Nullable', () => {
     };
     const nullableDataType = new Nullable(mockedType);
 
-    it('calls wrapped dataType parse method if data is not undefined', () => {
+    it('throws ChaiseSchemaError with extended source type', () => {
       expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
       expect(() => nullableDataType.parse(0)).toThrow("expected any or null but received test");
     });
@@ -45,7 +47,7 @@ describe('Nullable', () => {
     };
     const nullableDataType = new Nullable(mockedType);
 
-    it('calls wrapped dataType parse method if data is not undefined', () => {
+    it('throws original error', () => {
       expect(() => nullableDataType.parse(0)).toThrow(Error);
       expect(() => nullableDataType.parse(0)).toThrow('test error');
     });

@@ -20,10 +20,18 @@ export class ArrayDataType<S extends DataType<any>> extends BaseDataType<InferTy
       throw new ChaiseSchemaError('array', typeof data);
     }
 
-    const parsedArray = data.map(item => this.itemDataType.parse(item, onParse));
+    const parsedArray = data.map((item, id) => {
+      try {
+        return this.itemDataType.parse(item, onParse);
+      } catch (error) {
+        if (error instanceof ChaiseSchemaError) {
+          error.addParent(String(id));
+        }
+        throw error;
+      }
+    });
     if (onParse) return onParse(this, parsedArray);
 
     return parsedArray;
   }
 }
-
