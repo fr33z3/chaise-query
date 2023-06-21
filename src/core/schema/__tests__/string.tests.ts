@@ -1,8 +1,8 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
-import { StringDataType } from '../string';
+import { string } from '../string';
 
 describe('StringDataType', () => {
-  const dataType = new StringDataType();
+  const dataType = string();
 
   it('parses string', () => {
     expect(dataType.parse('')).toEqual('');

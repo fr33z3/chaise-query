@@ -22,3 +22,5 @@ export class BooleanDataType extends BaseDataType<boolean> {
     return Boolean(data);
   }
 }
+
+export const boolean = () => new BooleanDataType();

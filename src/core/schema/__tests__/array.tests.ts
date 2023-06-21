@@ -1,5 +1,5 @@
 import { DataType } from '../data_type';
-import { ArrayDataType } from '../array';
+import { array } from '../array';
 import { ChaiseSchemaError } from '../../errors/schema_error';
 
 describe('ArrayDataType', () => {
@@ -7,7 +7,7 @@ describe('ArrayDataType', () => {
     const mockedType: DataType<any> = {
       parse: jest.fn(),
     };
-    const dataType = new ArrayDataType(mockedType);
+    const dataType = array(mockedType);
 
     it('parses empty array', () => {
       expect(dataType.parse([])).toEqual([]);
@@ -77,7 +77,7 @@ describe('ArrayDataType', () => {
         throw new ChaiseSchemaError('any', 'test');
       }),
     };
-    const nullableDataType = new ArrayDataType(mockedType);
+    const nullableDataType = array(mockedType);
 
     it('throws ChaiseSchemaError with defined path', () => {
       expect(() => nullableDataType.parse([1])).toThrow(ChaiseSchemaError);
@@ -91,7 +91,7 @@ describe('ArrayDataType', () => {
         throw new Error('test error');
       }),
     };
-    const nullableDataType = new ArrayDataType(mockedType);
+    const nullableDataType = array(mockedType);
 
     it('throws original error', () => {
       expect(() => nullableDataType.parse([1])).toThrow(Error);

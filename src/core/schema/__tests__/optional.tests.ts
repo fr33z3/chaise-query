@@ -1,13 +1,13 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
 import { DataType } from '../data_type';
-import { Optional } from '../optional';
+import { optional } from '../optional';
 
 describe('Optional', () => {
   describe('for data type', () => {
     const mockedType: DataType<any> = {
       parse: jest.fn(),
     };
-    const nullableDataType = new Optional(mockedType);
+    const nullableDataType = optional(mockedType);
 
     it('returns undefined when data is undefined', () => {
       expect(nullableDataType.parse(undefined)).toBeUndefined();
@@ -36,7 +36,7 @@ describe('Optional', () => {
         throw new ChaiseSchemaError('any', 'test');
       }),
     };
-    const nullableDataType = new Optional(mockedType);
+    const nullableDataType = optional(mockedType);
 
     it('throws ChaiseSchemaError with extended source type', () => {
       expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
@@ -50,7 +50,7 @@ describe('Optional', () => {
         throw new Error('test error');
       }),
     };
-    const nullableDataType = new Optional(mockedType);
+    const nullableDataType = optional(mockedType);
 
     it('throws original error', () => {
       expect(() => nullableDataType.parse(0)).toThrow(Error);

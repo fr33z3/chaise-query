@@ -20,3 +20,5 @@ export class Nullable<S extends DataType<any>> implements DataType<S | null> {
     }
   }
 }
+
+export const nullable = <S extends DataType<any>>(dataType: S) => new Nullable<S>(dataType);

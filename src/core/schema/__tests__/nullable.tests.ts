@@ -1,13 +1,13 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
 import { DataType } from '../data_type';
-import { Nullable } from '../nullable';
+import { nullable } from '../nullable';
 
 describe('Nullable', () => {
   describe('for data type', () => {
     const mockedType: DataType<any> = {
       parse: jest.fn(),
     };
-    const nullableDataType = new Nullable(mockedType);
+    const nullableDataType = nullable(mockedType);
 
     it('returns null when data is null or undefined', () => {
       expect(nullableDataType.parse(null)).toBeNull();
@@ -31,7 +31,7 @@ describe('Nullable', () => {
         throw new ChaiseSchemaError('any', 'test');
       }),
     };
-    const nullableDataType = new Nullable(mockedType);
+    const nullableDataType = nullable(mockedType);
 
     it('throws ChaiseSchemaError with extended source type', () => {
       expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
@@ -45,7 +45,7 @@ describe('Nullable', () => {
         throw new Error('test error');
       }),
     };
-    const nullableDataType = new Nullable(mockedType);
+    const nullableDataType = nullable(mockedType);
 
     it('throws original error', () => {
       expect(() => nullableDataType.parse(0)).toThrow(Error);

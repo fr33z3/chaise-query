@@ -1,6 +1,6 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
 import { DataType } from '../data_type';
-import { ObjectDataType } from '../object';
+import { object } from '../object';
 
 describe('ObjectDataType', () => {
   describe('for data type', () => {
@@ -11,7 +11,7 @@ describe('ObjectDataType', () => {
       parse: jest.fn(),
     };
 
-    const dataType = new ObjectDataType({
+    const dataType = object({
       first: mockedType1,
       second: mockedType2,
     });
@@ -93,7 +93,7 @@ describe('ObjectDataType', () => {
         throw new ChaiseSchemaError('any', 'test');
       }),
     };
-    const nullableDataType = new ObjectDataType({ first: mockedType });
+    const nullableDataType = object({ first: mockedType });
 
     it('throws ChaiseSchemaError with defined path', () => {
       expect(() => nullableDataType.parse({ first: 1 })).toThrow(ChaiseSchemaError);
@@ -107,7 +107,7 @@ describe('ObjectDataType', () => {
         throw new Error('test error');
       }),
     };
-    const nullableDataType = new ObjectDataType({ first: mockedType });
+    const nullableDataType = object({ first: mockedType });
 
     it('throws original error', () => {
       expect(() => nullableDataType.parse({ first: 1 })).toThrow(Error);

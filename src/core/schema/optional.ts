@@ -20,3 +20,5 @@ export class Optional<S extends DataType<any>> implements DataType<S | undefined
     }
   }
 }
+
+export const optional = <S extends DataType<any>>(dataType: S) => new Optional<S>(dataType);

@@ -28,3 +28,5 @@ export class NumberDataType extends BaseDataType<number> {
     return parsed;
   }
 }
+
+export const number = () => new NumberDataType();

@@ -1,8 +1,8 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
-import { NumberDataType } from '../number';
+import { number } from '../number';
 
 describe('NumberDataType', () => {
-  const dataType = new NumberDataType();
+  const dataType = number();
 
   it('parses numbers', () => {
     expect(dataType.parse(100)).toEqual(100);

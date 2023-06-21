@@ -1,8 +1,8 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
-import { BooleanDataType } from '../boolean';
+import { boolean } from '../boolean';
 
 describe('BooleanDataType', () => {
-  const dataType = new BooleanDataType();
+  const dataType = boolean();
 
   it('parses boolean', () => {
     expect(dataType.parse(true)).toEqual(true);

@@ -1,6 +1,6 @@
 import { ChaiseSchemaError } from '../../errors/schema_error';
 import { DataType } from '../data_type';
-import { DTO } from '../dto';
+import { dto } from '../dto';
 
 describe('DTO', () => {
   describe('for data type', () => {
@@ -11,7 +11,7 @@ describe('DTO', () => {
       parse: jest.fn(),
     };
 
-    const dataType = new DTO('TestDTO', {
+    const dataType = dto('TestDTO', {
       first: mockedType1,
       second: mockedType2,
     }, {});
@@ -93,7 +93,7 @@ describe('DTO', () => {
         throw new ChaiseSchemaError('any', 'test');
       }),
     };
-    const nullableDataType = new DTO('TestDTO', { first: mockedType }, {});
+    const nullableDataType = dto('TestDTO', { first: mockedType }, {});
 
     it('throws ChaiseSchemaError with defined path', () => {
       expect(() => nullableDataType.parse({ first: 1 })).toThrow(ChaiseSchemaError);
@@ -107,7 +107,7 @@ describe('DTO', () => {
         throw new Error('test error');
       }),
     };
-    const nullableDataType = new DTO('TestDTO', { first: mockedType }, {});
+    const nullableDataType = dto('TestDTO', { first: mockedType }, {});
 
     it('throws original error', () => {
       expect(() => nullableDataType.parse({ first: 1 })).toThrow(Error);

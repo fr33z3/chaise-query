@@ -22,3 +22,5 @@ export class StringDataType extends BaseDataType<string> {
     return String(data);
   }
 }
+
+export const string = () => new StringDataType();

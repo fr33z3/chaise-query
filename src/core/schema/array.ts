@@ -35,3 +35,5 @@ export class ArrayDataType<S extends DataType<any>> extends BaseDataType<InferTy
     return parsedArray;
   }
 }
+
+export const array = <S extends DataType<any>>(dataType: S) => new ArrayDataType<S>(dataType);

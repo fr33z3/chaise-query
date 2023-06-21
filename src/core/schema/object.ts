@@ -48,3 +48,5 @@ export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTyp
     return result;
   }
 }
+
+export const object = <S extends Record<string, DataType<any>>>(schema: S) => new ObjectDataType<S>(schema);
