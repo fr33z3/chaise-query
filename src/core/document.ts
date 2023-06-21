@@ -49,7 +49,7 @@ export class QueryDocument<TData, Input extends ObjectDataType<any>> {
   }
 
   getKeyArgs(args: InferSchema<Input>): string {
-    return this.keyArgs.map(key => args[key]).join(';');
+    return this.keyArgs.map(key => args[key]).join(',');
   }
 }
 
