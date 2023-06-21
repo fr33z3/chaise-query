@@ -1,3 +1,4 @@
+import { ChaiseSchemaError } from '../errors/schema_error';
 import { DataType, InferType } from './data_type';
 
 export class Optional<S extends DataType<any>> implements DataType<S | undefined> {
@@ -8,6 +9,14 @@ export class Optional<S extends DataType<any>> implements DataType<S | undefined
       return undefined;
     }
 
-    return this.dataType.parse(data);
+    try {
+      return this.dataType.parse(data);
+    } catch (err: any) {
+      if (err instanceof ChaiseSchemaError) {
+        err.extendExpectedType('undefined');
+      }
+
+      throw err;
+    }
   }
 }

@@ -1,3 +1,4 @@
+import { ChaiseSchemaError } from "../errors/schema_error";
 import { DataType, InferType } from "./data_type";
 
 export class Nullable<S extends DataType<any>> implements DataType<S | null> {
@@ -8,6 +9,14 @@ export class Nullable<S extends DataType<any>> implements DataType<S | null> {
       return null;
     }
 
-    return this.dataType.parse(data);
+    try {
+      return this.dataType.parse(data);
+    } catch (err: any) {
+      if (err instanceof ChaiseSchemaError) {
+        err.extendExpectedType('null');
+      }
+
+      throw err;
+    }
   }
 }

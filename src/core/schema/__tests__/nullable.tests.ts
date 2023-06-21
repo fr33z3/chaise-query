@@ -1,3 +1,4 @@
+import { ChaiseSchemaError } from '../../errors/schema_error';
 import { DataType } from '../data_type';
 import { Nullable } from '../nullable';
 
@@ -20,5 +21,33 @@ describe('Nullable', () => {
   it('calls wrapped dataType parse method if data is not null', () => {
     nullableDataType.parse('');
     expect(mockedType.parse).toBeCalledWith('');
+  });
+
+  describe('for data type which throws ChaiseSchemaError', () => {
+    const mockedType: DataType<any> = {
+      parse: jest.fn().mockImplementation(() => {
+        throw new ChaiseSchemaError('any', 'test');
+      }),
+    };
+    const nullableDataType = new Nullable(mockedType);
+
+    it('calls wrapped dataType parse method if data is not undefined', () => {
+      expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
+      expect(() => nullableDataType.parse(0)).toThrow("expected any or null but received test");
+    });
+  });
+
+  describe('for data type which throws any other error', () => {
+    const mockedType: DataType<any> = {
+      parse: jest.fn().mockImplementation(() => {
+        throw new Error('test error');
+      }),
+    };
+    const nullableDataType = new Nullable(mockedType);
+
+    it('calls wrapped dataType parse method if data is not undefined', () => {
+      expect(() => nullableDataType.parse(0)).toThrow(Error);
+      expect(() => nullableDataType.parse(0)).toThrow('test error');
+    });
   });
 });
