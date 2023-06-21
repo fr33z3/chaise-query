@@ -15,15 +15,24 @@ export class ObjectDataType<S extends ObjectData> extends BaseDataType<ObjectTyp
   }
 
   parse(data: any, onParse?: OnParseFn): ObjectTypeInfer<S> {
+    if (data === null) {
+      throw new TypeError('expected object but received null');
+    }
+    if (data === undefined) {
+      throw new TypeError('expected object but received undefined');
+    }
+    if (Array.isArray(data)) {
+      throw new TypeError(`expected object but received array`);
+    }
+    if (typeof data !== 'object') {
+      throw new TypeError(`expected object but received ${typeof data}`);
+    }
+
     const result: ObjectTypeInfer<S> = {} as ObjectTypeInfer<S>;
 
     for (const key in this.attributes) {
-      if (this.attributes.hasOwnProperty(key) && data.hasOwnProperty(key)) {
-        const k = key as unknown as keyof ObjectTypeInfer<S>;
-        result[k] = this.attributes[key].parse(data[key], onParse);
-      } else {
-        throw new Error(`Data must have a property ${key}.`);
-      }
+      const k = key as unknown as keyof ObjectTypeInfer<S>;
+      result[k] = this.attributes[key].parse(data[key], onParse);
     }
 
     return result;
