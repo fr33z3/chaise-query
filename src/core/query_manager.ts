@@ -3,9 +3,8 @@ import { QueryDocument } from "./document";
 import { v4 as uuid } from 'uuid';
 import { ObjectDataType } from "./schema/object";
 import { ChaiseLink } from "./links/base";
-import { getInitialRequestContext } from "./links/request-context";
 import { ChaiseCache } from "./cache";
-import { InferType } from "./schema/data_type";
+import { buildOperation, operateLinks } from "./links/operator";
 
 export type QueryManagerOptions = {
   links: ChaiseLink[]
@@ -41,7 +40,8 @@ export class QueryManager {
     }
     if (cachePolicy === 'cache-only') return;
 
-    const { document, error, data } = await this.executeLinks(observableQuery.document, args);
+    const operation = buildOperation(observableQuery.document, args);
+    const { document, error, data } = await operateLinks(this.links, operation);
 
     if (error) {
       observableQuery.writeError(error);
@@ -65,17 +65,6 @@ export class QueryManager {
       const cacheData = cache.readQuery(observableQuery.document, observableQuery.options.args);
       if (cacheData) observableQuery.writeData(cacheData);
     });
-  }
-
-  private async executeLinks<TData, TArgs extends ObjectDataType<any>>(document: QueryDocument<TData, TArgs>, args: InferType<TArgs>) {
-    const initialCtx = getInitialRequestContext(document, args);
-
-    const context = await this.links.reduce(async (prevCtx, link) => {
-      const ctx = await prevCtx;
-      return link.execute(ctx);
-    }, Promise.resolve(initialCtx));
-
-    return context;
   }
 
   stopWatchQuery(query: ObservableQuery<any, any>) {

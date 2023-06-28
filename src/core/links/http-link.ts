@@ -1,16 +1,49 @@
-import { AnyDocument, QueryDocument } from "../document";
+import { AnyDocument, MutationDocument, RequestMethod } from "../document";
 import { ObjectDataType } from "../schema/object";
 import { ChaiseLink } from "./base";
-import { RequestContext } from "./request-context";
+import { Operation } from "./operator";
+
+export type HTTPLinkFetcher = (url: URL, options: {
+  method: RequestMethod,
+  headers: Record<string, string>,
+  body?: Record<string, any>
+}) => Promise<{
+  data: any | null,
+  successful: boolean,
+  headers: Headers,
+}>;
 
 export type HTTPLinkConfiguration = {
   baseUrl: string
   defaultHeaders?: Record<string, string>
+  fetch?: HTTPLinkFetcher
 }
+
+const defaultFetcher: HTTPLinkFetcher = async (url, { method, headers, body }) => {
+  const response = await fetch(url.toString(), {
+    method,
+    headers,
+    body: body && JSON.stringify(body),
+  });
+
+  let data: any | null;
+  try {
+    data = await response.json();
+  } catch (error) {
+    // Do nothing
+  }
+
+  return {
+    data,
+    successful: response.ok,
+    headers: response.headers,
+  };
+};
 
 export class HTTPLink implements ChaiseLink {
   readonly baseUrl: string;
   readonly defaultHeaders?: Record<string, string>;
+  readonly fetch: HTTPLinkFetcher;
 
   constructor(configuration: HTTPLinkConfiguration) {
     this.baseUrl = configuration.baseUrl;
@@ -18,51 +51,48 @@ export class HTTPLink implements ChaiseLink {
       'Content-Type': 'application/json',
       ...configuration.defaultHeaders
     };
+    this.fetch = configuration.fetch ?? defaultFetcher;
   }
 
-  async execute<TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>>(context: RequestContext<TData, TArgs, TDocument>): Promise<RequestContext<TData, TArgs, TDocument>> {
-    const ctx = this.applyHeaders(context);
-    const { document, headers, args } = ctx;
+  async execute<TDocument extends AnyDocument<any, any>>(operation: Operation<TDocument>): Promise<Operation<TDocument>> {
+    const op = this.applyHeaders(operation);
+    const { document, headers, args } = op;
     const url = this.buildRequestUrl(document, args);
 
-    const body = document instanceof QueryDocument ? undefined : JSON.stringify(document.getBody(args));
+    const body = document instanceof MutationDocument ? document.getBody(args) : undefined;
 
-    const response = await fetch(url, {
+    const response = await this.fetch(url, {
       method: document.method,
       headers,
       body,
     });
-    let jsonData: any;
-    try {
-      jsonData = await response.json();
-    } catch (error) {
-      // Do nothing
-    }
 
-    if (response.status === 200 || response.status === 201) {
+    if (response.successful) {
       return {
-        ...ctx,
-        data: jsonData,
+        ...op,
+        data: response.data,
+        responseHeaders: response.headers,
       };
     } else {
       return {
-        ...ctx,
-        error: new Error(jsonData),
+        ...op,
+        error: new Error(response.data),
+        responseHeaders: response.headers,
       };
     }
   }
 
-  private buildRequestUrl<TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>>(document: AnyDocument<any, any>, args?: RequestContext<TData, TArgs, TDocument>['args']) {
+  private buildRequestUrl(document: AnyDocument<any, any>, args: Record<string, any>) {
     const baseUrl = new URL(this.baseUrl);
     return new URL(baseUrl.pathname + document.getPath(args), this.baseUrl);
   }
 
-  private applyHeaders<TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>>(context: RequestContext<TData, TArgs, TDocument>): RequestContext<TData, TArgs, TDocument> {
+  private applyHeaders<TDocument extends AnyDocument<any, any>>(operation: Operation<TDocument>): Operation<TDocument> {
     return {
-      ...context,
+      ...operation,
       headers: {
         ...this.defaultHeaders,
-        ...context.headers,
+        ...operation.headers,
       }
     };
   }

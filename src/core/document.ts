@@ -3,29 +3,29 @@ import { InferSchema, Schema } from './schema';
 import { ObjectDataType } from './schema/object';
 import { InferType } from './schema/data_type';
 
-type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
-type Path<Input extends ObjectDataType<any>> = string | ((args: InferSchema<Input>) => string)
+export type RequestMethod = 'GET' | 'POST' | 'PUT' | 'DELETE'
+type Path<TArgs extends ObjectDataType<any>> = string | ((args: InferSchema<TArgs>) => string)
 
-type QueryDocumentOptions<TData, Input extends ObjectDataType<any>> = {
-  path: Path<Input>
+type QueryDocumentOptions<TData, TArgs extends ObjectDataType<any>> = {
+  path: Path<TArgs>
   schema: Schema<TData>
-  args?: Input
+  args?: TArgs
   context?: Record<string, any>
   method?: RequestMethod
 }
 
-export class QueryDocument<TData, Input extends ObjectDataType<any>> {
+export class QueryDocument<TData, TArgs extends ObjectDataType<any>> {
   readonly name: string;
-  readonly path: Path<Input>;
+  readonly path: Path<TArgs>;
   readonly schema: Schema<TData>;
-  readonly args?: Input;
+  readonly args?: TArgs;
   readonly context: Record<string, any>;
   readonly method: RequestMethod;
   readonly keyArgs: string[];
 
   constructor(
     name: string,
-    options: QueryDocumentOptions<TData, Input>
+    options: QueryDocumentOptions<TData, TArgs>
   ) {
     this.name = name;
     this.path = options.path;
@@ -36,7 +36,7 @@ export class QueryDocument<TData, Input extends ObjectDataType<any>> {
     this.keyArgs = Object.keys(options.args?.attributes ?? []);
   }
 
-  getPath(args: InferSchema<Input>): string {
+  getPath(args: InferSchema<TArgs>): string {
     if (typeof this.path === 'string') {
       // TODO: serialize args
       const urlSearch = new URLSearchParams(args as Record<string, any>).toString();
@@ -48,41 +48,41 @@ export class QueryDocument<TData, Input extends ObjectDataType<any>> {
     }
   }
 
-  getKeyArgs(args: InferSchema<Input>): string {
+  getKeyArgs(args: InferSchema<TArgs>): string {
     return this.keyArgs.map(key => args[key]).join(',');
   }
 }
 
-export function queryDocument<TData, Input extends ObjectDataType<any>>(name: string, options: QueryDocumentOptions<TData, Input>): QueryDocument<TData, Input> {
+export function queryDocument<TData, TArgs extends ObjectDataType<any>>(name: string, options: QueryDocumentOptions<TData, TArgs>): QueryDocument<TData, TArgs> {
   return new QueryDocument(
     name,
     options
   );
 }
 
-type MutationDocumentOptions<TData, Input extends ObjectDataType<any>> = {
-  path: Path<Input>
+type MutationDocumentOptions<TData, TArgs extends ObjectDataType<any>> = {
+  path: Path<TArgs>
   schema: Schema<TData>
-  args?: Input
+  args?: TArgs
   context?: Record<string, any>
   method?: RequestMethod
-  body?: (args: InferSchema<Input>) => Record<string, any>
-  update?: (cache: ChaiseCache, data: InferType<Schema<TData>>, args: InferType<Input>) => void
+  body?: (args: InferSchema<TArgs>) => Record<string, any>
+  update?: (cache: ChaiseCache, data: InferType<Schema<TData>>, args: InferType<TArgs>) => void
 }
 
-export class MutationDocument<TData, Input extends ObjectDataType<any>> {
+export class MutationDocument<TData, TArgs extends ObjectDataType<any>> {
   readonly name: string;
-  readonly path: Path<Input>;
+  readonly path: Path<TArgs>;
   readonly schema: Schema<TData>;
-  readonly args?: Input;
+  readonly args?: TArgs;
   readonly context: Record<string, any>;
   readonly method: RequestMethod;
-  readonly body?: (args: InferSchema<Input>) => Record<string, any>;
-  readonly update: (cache: ChaiseCache, data: InferType<Schema<TData>>, args: InferType<Input>) => void;
+  private body?: (args: InferSchema<TArgs>) => Record<string, any>;
+  readonly update: (cache: ChaiseCache, data: InferType<Schema<TData>>, args: InferType<TArgs>) => void;
 
   constructor(
     name: string,
-    options: MutationDocumentOptions<TData, Input>
+    options: MutationDocumentOptions<TData, TArgs>
   ) {
     this.name = name;
     this.path = options.path;
@@ -94,7 +94,7 @@ export class MutationDocument<TData, Input extends ObjectDataType<any>> {
     this.update = options.update ?? ((cache, data) => { cache.updateByMutation(this, data); });
   }
 
-  getPath(args: InferSchema<Input>): string {
+  getPath(args: InferSchema<TArgs>): string {
     if (typeof this.path === 'string') {
       return this.path;
     } else {
@@ -102,7 +102,7 @@ export class MutationDocument<TData, Input extends ObjectDataType<any>> {
     }
   }
 
-  getBody(args: InferSchema<Input>): Record<string, any> {
+  getBody(args: InferSchema<TArgs>): Record<string, any> {
     // TODO: serialize args
 
     if (this.body) return this.body(args);
@@ -111,7 +111,7 @@ export class MutationDocument<TData, Input extends ObjectDataType<any>> {
   }
 }
 
-export function mutationDocument<TData, Input extends ObjectDataType<any>>(name: string, options: MutationDocumentOptions<TData, Input>): MutationDocument<TData, Input> {
+export function mutationDocument<TData, TArgs extends ObjectDataType<any>>(name: string, options: MutationDocumentOptions<TData, TArgs>): MutationDocument<TData, TArgs> {
   return new MutationDocument(
     name,
     options

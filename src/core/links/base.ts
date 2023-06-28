@@ -1,7 +1,6 @@
 import { AnyDocument } from "../document";
-import { ObjectDataType } from "../schema/object";
-import { RequestContext } from "./request-context";
+import { Operation } from "./operator";
 
 export interface ChaiseLink {
-  execute: <TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>>(query: RequestContext<TData, TArgs, TDocument>) => Promise<RequestContext<TData, TArgs, TDocument>>
+  execute: <TDocument extends AnyDocument<any, any>>(operation: Operation<TDocument>) => Promise<Operation<TDocument>>
 }

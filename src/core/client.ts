@@ -1,10 +1,10 @@
 import { ChaiseLink } from "./links";
-import { AnyDocument, MutationDocument, QueryDocument } from "./document";
+import { MutationDocument, QueryDocument } from "./document";
 import { QueryManager } from "./query_manager";
 import { ObjectDataType } from "./schema/object";
 import { ChaiseCache } from "./cache";
-import { getInitialRequestContext } from "./links/request-context";
 import { InferType } from "./schema/data_type";
+import { buildOperation, operateLinks } from "./links/operator";
 
 type ChaiseClientOptions = {
   links: ChaiseLink[],
@@ -46,7 +46,8 @@ export class ChaiseClient {
   async mutate<TData, TArgs extends ObjectDataType<any>>(document: MutationDocument<TData, TArgs>, options: MutationOptions<TData, TArgs>): Promise<MutationResponse<TData>> {
     const { args, cachePolicy, onCompleted } = options;
 
-    const { data, error } = await this.executeLinks<TData, TArgs, MutationDocument<TData, TArgs>>(document, args);
+    const initialCtx = buildOperation(document, args);
+    const { data, error } = await operateLinks(this.links, initialCtx);
     let parsedData: TData | null = null;
 
     if (data) {
@@ -61,16 +62,5 @@ export class ChaiseClient {
       data: parsedData,
       error,
     };
-  }
-
-  private async executeLinks<TData, TArgs extends ObjectDataType<any>, TDocument extends AnyDocument<TData, TArgs>>(document: TDocument, args: InferType<TArgs>) {
-    const initialCtx = getInitialRequestContext<TData, TArgs, TDocument>(document, args);
-
-    const context = await this.links.reduce(async (prevCtx, link) => {
-      const ctx = await prevCtx;
-      return link.execute(ctx);
-    }, Promise.resolve(initialCtx));
-
-    return context;
   }
 }
