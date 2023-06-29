@@ -1,7 +1,7 @@
-import { MutationDocument, QueryDocument } from "./document";
-import { Schema } from "./schema";
-import { ArrayDataType } from "./schema/array";
-import { DTO } from "./schema/dto";
+import { MutationDocument, QueryDocument } from './document';
+import { Schema } from './schema';
+import { ArrayDataType } from './schema/array';
+import { DTO } from './schema/dto';
 
 export class ChaiseCache {
   readonly queries: Map<string, any> = new Map();

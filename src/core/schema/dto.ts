@@ -1,5 +1,5 @@
 import { DataType, OnParseFn } from './data_type';
-import { ObjectDataType, ObjectData, ObjectTypeInfer } from "./object";
+import { ObjectDataType, ObjectData, ObjectTypeInfer } from './object';
 
 export type DTOPOptions = {
   keys?: string[]

@@ -97,7 +97,7 @@ describe('ObjectDataType', () => {
 
     it('throws ChaiseSchemaError with defined path', () => {
       expect(() => nullableDataType.parse({ first: 1 })).toThrow(ChaiseSchemaError);
-      expect(() => nullableDataType.parse({ first: 1 })).toThrow("expected any but received test at first");
+      expect(() => nullableDataType.parse({ first: 1 })).toThrow('expected any but received test at first');
     });
   });
 

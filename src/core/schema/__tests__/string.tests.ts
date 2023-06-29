@@ -17,28 +17,28 @@ describe('StringDataType', () => {
 
   it('fails on boolean', () => {
     expect(() => dataType.parse(true)).toThrow(ChaiseSchemaError);
-    expect(() => dataType.parse(true)).toThrow("expected string but received boolean");
+    expect(() => dataType.parse(true)).toThrow('expected string but received boolean');
   });
 
   it('fails on array', () => {
     expect(() => dataType.parse([])).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse([1, 2])).toThrow(ChaiseSchemaError);
-    expect(() => dataType.parse([1, 2])).toThrow("expected string but received array");
+    expect(() => dataType.parse([1, 2])).toThrow('expected string but received array');
   });
 
   it('fails on object', () => {
     expect(() => dataType.parse({})).toThrow(ChaiseSchemaError);
     expect(() => dataType.parse({ a: 1 })).toThrow(ChaiseSchemaError);
-    expect(() => dataType.parse({ b: 1 })).toThrow("expected string but received object");
+    expect(() => dataType.parse({ b: 1 })).toThrow('expected string but received object');
   });
 
   it('fails on null', () => {
     expect(() => dataType.parse(null)).toThrow(ChaiseSchemaError);
-    expect(() => dataType.parse(null)).toThrow("expected string but received null");
+    expect(() => dataType.parse(null)).toThrow('expected string but received null');
   });
 
   it('fails on undefined', () => {
     expect(() => dataType.parse(undefined)).toThrow(ChaiseSchemaError);
-    expect(() => dataType.parse(undefined)).toThrow("expected string but received undefined");
+    expect(() => dataType.parse(undefined)).toThrow('expected string but received undefined');
   });
 });

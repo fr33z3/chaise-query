@@ -1,6 +1,6 @@
-import { DataType, OnParseFn } from "./data_type";
-import { Nullable } from "./nullable";
-import { Optional } from "./optional";
+import { DataType, OnParseFn } from './data_type';
+import { Nullable } from './nullable';
+import { Optional } from './optional';
 
 export abstract class BaseDataType<Data> implements DataType<Data> {
   parse(data: any, onParse?: OnParseFn): Data {

@@ -1,10 +1,10 @@
-import { ChaiseLink } from "./links";
-import { MutationDocument, QueryDocument } from "./document";
-import { QueryManager } from "./query_manager";
-import { ObjectDataType } from "./schema/object";
-import { ChaiseCache } from "./cache";
-import { InferType } from "./schema/data_type";
-import { buildOperation, operateLinks } from "./links/operator";
+import { ChaiseLink } from './links';
+import { MutationDocument, QueryDocument } from './document';
+import { QueryManager } from './query_manager';
+import { ObjectDataType } from './schema/object';
+import { ChaiseCache } from './cache';
+import { InferType } from './schema/data_type';
+import { buildOperation, operateLinks } from './links/operator';
 
 type ChaiseClientOptions = {
   links: ChaiseLink[],

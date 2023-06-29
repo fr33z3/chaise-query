@@ -40,7 +40,7 @@ describe('Optional', () => {
 
     it('throws ChaiseSchemaError with extended source type', () => {
       expect(() => nullableDataType.parse(0)).toThrow(ChaiseSchemaError);
-      expect(() => nullableDataType.parse(0)).toThrow("expected any or undefined but received test");
+      expect(() => nullableDataType.parse(0)).toThrow('expected any or undefined but received test');
     });
   });
 

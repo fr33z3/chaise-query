@@ -1,5 +1,5 @@
-import { ChaiseSchemaError } from "../errors/schema_error";
-import { BaseDataType } from "./base";
+import { ChaiseSchemaError } from '../errors/schema_error';
+import { BaseDataType } from './base';
 
 export class BooleanDataType extends BaseDataType<boolean> {
   parse(data: any): boolean {

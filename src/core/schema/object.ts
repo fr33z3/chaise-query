@@ -1,6 +1,6 @@
 import { OnParseFn, DataType, InferType } from './data_type';
-import { BaseDataType } from "./base";
-import { Optional } from "./optional";
+import { BaseDataType } from './base';
+import { Optional } from './optional';
 import { ChaiseSchemaError } from '../errors/schema_error';
 
 export type ObjectData = Record<string, DataType<any>>

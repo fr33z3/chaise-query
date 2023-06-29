@@ -1,10 +1,10 @@
-import { ChaiseSchemaError } from "../../errors/schema_error";
-import { array } from "../array";
-import { boolean } from "../boolean";
-import { dto } from "../dto";
-import { number } from "../number";
-import { object } from "../object";
-import { string } from "../string";
+import { ChaiseSchemaError } from '../../errors/schema_error';
+import { array } from '../array';
+import { boolean } from '../boolean';
+import { dto } from '../dto';
+import { number } from '../number';
+import { object } from '../object';
+import { string } from '../string';
 
 describe('Schema', () => {
   const schema = object({

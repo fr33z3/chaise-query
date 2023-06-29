@@ -1,5 +1,5 @@
-import { ChaiseSchemaError } from "../errors/schema_error";
-import { DataType, InferType } from "./data_type";
+import { ChaiseSchemaError } from '../errors/schema_error';
+import { DataType, InferType } from './data_type';
 
 export class Nullable<S extends DataType<any>> implements DataType<S | null> {
   constructor(private dataType: S) {}

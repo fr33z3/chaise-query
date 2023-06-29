@@ -102,10 +102,10 @@ export class MutationDocument<TData, TArgs extends ObjectDataType<any>> {
     }
   }
 
-  getBody(args: InferSchema<TArgs>): Record<string, any> {
+  getBody(args: InferSchema<TArgs>): Record<string, any> | undefined {
     // TODO: serialize args
-
     if (this.body) return this.body(args);
+    if (!this.args) return undefined;
 
     return args;
   }

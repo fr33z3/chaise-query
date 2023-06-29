@@ -1,10 +1,10 @@
-import { ObservableQuery, QueryOptions } from "./observable_query";
-import { QueryDocument } from "./document";
+import { ObservableQuery, QueryOptions } from './observable_query';
+import { QueryDocument } from './document';
 import { v4 as uuid } from 'uuid';
-import { ObjectDataType } from "./schema/object";
-import { ChaiseLink } from "./links/base";
-import { ChaiseCache } from "./cache";
-import { buildOperation, operateLinks } from "./links/operator";
+import { ObjectDataType } from './schema/object';
+import { ChaiseLink } from './links/base';
+import { ChaiseCache } from './cache';
+import { buildOperation, operateLinks } from './links/operator';
 
 export type QueryManagerOptions = {
   links: ChaiseLink[]

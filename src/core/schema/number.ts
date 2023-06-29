@@ -1,5 +1,5 @@
-import { ChaiseSchemaError } from "../errors/schema_error";
-import { BaseDataType } from "./base";
+import { ChaiseSchemaError } from '../errors/schema_error';
+import { BaseDataType } from './base';
 
 export class NumberDataType extends BaseDataType<number> {
   parse(data: any): number {

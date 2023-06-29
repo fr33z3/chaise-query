@@ -81,7 +81,7 @@ describe('ArrayDataType', () => {
 
     it('throws ChaiseSchemaError with defined path', () => {
       expect(() => nullableDataType.parse([1])).toThrow(ChaiseSchemaError);
-      expect(() => nullableDataType.parse([1])).toThrow("expected any but received test at 0");
+      expect(() => nullableDataType.parse([1])).toThrow('expected any but received test at 0');
     });
   });
 

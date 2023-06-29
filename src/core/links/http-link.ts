@@ -1,7 +1,6 @@
-import { AnyDocument, MutationDocument, RequestMethod } from "../document";
-import { ObjectDataType } from "../schema/object";
-import { ChaiseLink } from "./base";
-import { Operation } from "./operator";
+import { AnyDocument, MutationDocument, RequestMethod } from '../document';
+import { ChaiseLink } from './base';
+import { Operation } from './operator';
 
 export type HTTPLinkFetcher = (url: URL, options: {
   method: RequestMethod,

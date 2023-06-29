@@ -1,5 +1,5 @@
-import { AnyDocument } from "../document";
-import { ChaiseLink } from "./base";
+import { AnyDocument } from '../document';
+import { ChaiseLink } from './base';
 
 export type Operation<TDocument extends AnyDocument<any, any>> = {
   document: TDocument

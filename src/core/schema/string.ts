@@ -1,5 +1,5 @@
-import { ChaiseSchemaError } from "../errors/schema_error";
-import { BaseDataType } from "./base";
+import { ChaiseSchemaError } from '../errors/schema_error';
+import { BaseDataType } from './base';
 
 export class StringDataType extends BaseDataType<string> {
   parse(data: any): string {

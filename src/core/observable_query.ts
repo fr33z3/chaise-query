@@ -1,8 +1,8 @@
-import { QueryDocument } from "./document";
+import { QueryDocument } from './document';
 import { Observable } from 'zen-observable-ts';
-import { QueryManager } from "./query_manager";
-import { ObjectDataType } from "./schema/object";
-import { InferSchema } from "./schema";
+import { QueryManager } from './query_manager';
+import { ObjectDataType } from './schema/object';
+import { InferSchema } from './schema';
 
 type CachePolicy = 'cache-first' | 'cache-and-network' | 'network-only' | 'no-cache' | 'cache-only'
 
